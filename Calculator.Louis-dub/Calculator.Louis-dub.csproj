@@ -3,14 +3,10 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>Calculator.Louis_dub</RootNamespace>
+    <RootNamespace>CalculatorProgram</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.57.2" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CalculatorLibrary\CalculatorLibrary.csproj" />
