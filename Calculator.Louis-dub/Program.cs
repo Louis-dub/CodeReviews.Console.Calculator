@@ -1,4 +1,5 @@
 ﻿using CalculatorLibrary;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace CalculatorProgram;
@@ -12,6 +13,7 @@ class Program
         Console.WriteLine("------------------------\n");
 
         Calculator calculator = new();
+        int length = 0;
         while (!endApp)
         {
             string? numInput1 = "";
@@ -30,8 +32,10 @@ class Program
                 try
                 {
                     File.Delete("calculatorlog.json");
-                    calculator.Finish();
+                    calculator.Finish(length);
                     calculator = new();
+                    length = 0;
+                    Console.WriteLine("History successfully cleared.");
                 }
                 catch (Exception ex)
                 {
@@ -77,6 +81,7 @@ class Program
                 try
                 {
                     result = calculator.DoOperation(cleanNum1, cleanNum2, op); 
+                    length++;
                     if (double.IsNaN(result))
                     {
                         Console.WriteLine("This operation will result in a mathematical error.\n");
@@ -95,7 +100,7 @@ class Program
 
             Console.WriteLine("\n");
         }
-        calculator.Finish();
+        calculator.Finish(length);
         return;
     }
 }

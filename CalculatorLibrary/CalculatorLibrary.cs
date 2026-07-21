@@ -59,9 +59,11 @@ public class Calculator
         return result;
     }
 
-    public void Finish()
+    public void Finish(int lenght)
     {
         writer.WriteEndArray();
+        writer.WritePropertyName("Number of Operation");
+        writer.WriteValue(lenght);
         writer.WriteEndObject();
         writer.Close();
     }
