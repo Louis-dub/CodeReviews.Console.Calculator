@@ -74,6 +74,7 @@ class Program
 
             Console.WriteLine("\n");
         }
+        calculator.Finish();
         return;
     }
 }
