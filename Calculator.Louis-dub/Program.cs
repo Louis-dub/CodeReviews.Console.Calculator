@@ -17,6 +17,27 @@ class Program
             string? numInput1 = "";
             string? numInput2 = "";
             double result = 0;
+            string? action = "";
+
+            while (action != "D" && action != "C")
+            {
+                Console.Write("Type 'D' to clear your calculation history, or type 'C' to use Calculator: ");
+                action = Console.ReadLine();
+            }
+
+            if (action == "D")
+            {
+                try
+                {
+                    File.Delete("calculatorlog.json");
+                    calculator.Finish();
+                    calculator = new();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
 
             Console.Write("Type a number, and then press Enter: ");
             numInput1 = Console.ReadLine();
