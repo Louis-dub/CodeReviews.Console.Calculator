@@ -50,6 +50,20 @@ public class Calculator
                     result = num1 / num2;
                 writer.WriteValue("Divide");
                 break;
+            case "mo":
+                if (num2 != 0)
+                    result = num1 % num2;
+                writer.WriteValue("Modulo");
+                break;
+            case "e":
+                result = Math.Pow(num1, num2);
+                writer.WriteValue("Exponentiation");
+                break;
+            case "r":
+                if (num2 > 0)
+                    result = Math.Pow(num1, 1.0 / num2);
+                writer.WriteValue("Root");
+                break;
             default:
                 break;
         }

@@ -68,11 +68,14 @@ class Program
             Console.WriteLine("\ts - Subtract");
             Console.WriteLine("\tm - Multiply");
             Console.WriteLine("\td - Divide");
+            Console.WriteLine("\tmo - Modulo");
+            Console.WriteLine("\te - Exponentiation");
+            Console.WriteLine("\tr - Root");
             Console.Write("Your option? ");
 
             string? op = Console.ReadLine();
 
-            if (op == null || ! Regex.IsMatch(op, "[a|s|m|d]"))
+            if (op == null || ! Regex.IsMatch(op, "^(a|s|m|d|mo|e|r)$"))
             {
                 Console.WriteLine("Error: Unrecognized input.");
             }
