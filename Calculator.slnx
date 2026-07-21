@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Calculator.Louis-dub/Calculator.Louis-dub.csproj" />
+  <Project Path="CalculatorLibrary/CalculatorLibrary.csproj" />
+</Solution>
