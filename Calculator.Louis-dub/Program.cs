@@ -13,7 +13,7 @@ class Program
         Console.WriteLine("------------------------\n");
 
         Calculator calculator = new();
-        int length = 0;
+        List<double> history = [];
         while (!endApp)
         {
             string? numInput1 = "";
@@ -32,9 +32,9 @@ class Program
                 try
                 {
                     File.Delete("calculatorlog.json");
-                    calculator.Finish(length);
+                    calculator.Finish(history.Count);
                     calculator = new();
-                    length = 0;
+                    history = [];
                     Console.WriteLine("History successfully cleared.");
                 }
                 catch (Exception ex)
@@ -43,24 +43,36 @@ class Program
                 }
             }
 
+            if (history.Count > 0)
+            {
+                Console.WriteLine("\nRecent results:");
+                for (int i = 0; i < history.Count; i++)
+                {
+                    Console.WriteLine($"  [r{i + 1}] {history[i]}");
+                }
+                Console.WriteLine("Tip: type a number, or 'r' followed by its number above (e.g. r1) to reuse a result.\n");
+            }
+
             Console.Write("Type a number, and then press Enter: ");
             numInput1 = Console.ReadLine();
 
-            double cleanNum1 = 0;
-            while (!double.TryParse(numInput1, out cleanNum1))
+            double cleanNum1 = FindResult(history, numInput1);
+            while (double.IsNaN(cleanNum1) && !double.TryParse(numInput1, out cleanNum1))
             {
-                Console.Write("This is not valid input. Please enter an integer value: ");
+                Console.Write("Invalid input. Enter a number, or rN to reuse result N (e.g. r1): ");
                 numInput1 = Console.ReadLine();
+                cleanNum1 = FindResult(history, numInput1);
             }
 
             Console.Write("Type another number, and then press Enter: ");
             numInput2 = Console.ReadLine();
 
-            double cleanNum2 = 0;
-            while (!double.TryParse(numInput2, out cleanNum2))
+            double cleanNum2 = FindResult(history, numInput2);
+            while (double.IsNaN(cleanNum2) && !double.TryParse(numInput2, out cleanNum2))
             {
-                Console.Write("This is not valid input. Please enter an integer value: ");
+                Console.Write("Invalid input. Enter a number, or rN to reuse result N (e.g. r1): ");
                 numInput2 = Console.ReadLine();
+                cleanNum2 = FindResult(history, numInput2);
             }
 
             Console.WriteLine("Choose an operator from the following list:");
@@ -84,7 +96,7 @@ class Program
                 try
                 {
                     result = calculator.DoOperation(cleanNum1, cleanNum2, op); 
-                    length++;
+                    history.Add(result);
                     if (double.IsNaN(result))
                     {
                         Console.WriteLine("This operation will result in a mathematical error.\n");
@@ -103,7 +115,26 @@ class Program
 
             Console.WriteLine("\n");
         }
-        calculator.Finish(length);
+        calculator.Finish(history.Count);
         return;
+    }
+
+    static double FindResult(List<double> history, string? r)
+    {
+        int id = 0;
+        bool end = false;
+
+        if (r?[0] == 'r' && r.Length >= 2) {
+            for (int i = 1; i < r.Length && !end; i++)
+            {
+                if (r[i] < '0' || r[i] > '9')
+                    end = true;
+                else
+                    id = id * 10 + (r[i] - '0');
+            }
+            if (!end && id - 1 < history.Count)
+                return history[id - 1];
+        }
+        return double.NaN;
     }
 }
