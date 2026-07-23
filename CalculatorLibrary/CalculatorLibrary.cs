@@ -76,7 +76,7 @@ public class Calculator
     public void Finish(int lenght)
     {
         writer.WriteEndArray();
-        writer.WritePropertyName("Number of Operation");
+        writer.WritePropertyName("Number of uses");
         writer.WriteValue(lenght);
         writer.WriteEndObject();
         writer.Close();
